@@ -53,9 +53,9 @@
 }
 #box-mainResource
 {
-	top:10%;
+	top:0px%;
 	width:20%
-	left:0px;
+	left:50%;
 	bottom:0px;
 	position:absolute;
 }
