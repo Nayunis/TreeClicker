@@ -46,10 +46,10 @@
 }
 #box-buttons
 {
-	top:0px;
-	right:0px;
-	bottom:0px;
+	top:10%;
+	width:20%
 	left:0px;
+	bottom:0px;
 	position:absolute;
 }
 #box-store
