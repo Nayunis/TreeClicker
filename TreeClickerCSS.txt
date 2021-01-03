@@ -38,7 +38,7 @@
 #box-res.fullWidth
 {
 	width:100%;
-	top:5%;
+	bottom:5%;
 	height:5%;
 	min-height:32px;
 	z-index:100;
@@ -46,10 +46,9 @@
 }
 #box-actions
 {
-	top:20%;
+	top:10%;
 	width:20%
 	left:0px;
-	bottom:0px;
 	position:absolute;
 }
 #box-mainResource
