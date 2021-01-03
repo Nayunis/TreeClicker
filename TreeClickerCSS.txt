@@ -46,7 +46,7 @@
 }
 #box-actions
 {
-	top:25%;
+	top:50%;
 	width:100%
 	left:0px;
 	position:absolute;
