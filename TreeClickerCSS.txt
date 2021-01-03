@@ -39,8 +39,8 @@
 {
 	width:100%;
 	bottom:0px;
-	height:20%;
-	min-height:50px;
+	height:25%;
+	min-height:100px;
 	z-index:100;
 	position:absolute;
 }
