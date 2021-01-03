@@ -7,7 +7,7 @@
 
 .thing,.box-header,.box-footer,.box-bit
 {
-	background:#229100;
+	background:#3391FF;
 	box-shadow:0px 0px 4px rgba(0,0,0,0.2),1px 1px 2px rgba(0,0,0,0.5),0px 0px 4px rgba(255,255,255,0.5) inset;
 }
 .box-bit{border-radius:5px;}
@@ -35,27 +35,27 @@
 	width:60%;
 	position:absolute;
 }
+#box-mainResource
+{
+	left:0px;
+	top:0px;
+	height:15%;
+	width:100%;
+	position:absolute;
+}
 #box-res.fullWidth
 {
+	left:0px
 	top:30%;
 	width:100%;	
-	height:25%;
 	min-height:100px;
 	z-index:100;
 	position:absolute;
 }
 #box-actions.fullWidth
 {
+	left:0px;
 	top:50%;
-	width:100%;
-	left:0px;
-	position:absolute;
-}
-#box-mainResource
-{
-	top:0px;
-	left:0px;
-	height:15%;
 	width:100%;
 	position:absolute;
 }
