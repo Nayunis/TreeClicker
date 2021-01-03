@@ -38,7 +38,7 @@
 #box-mainResource
 {
 	left:0px;
-	top:0px;
+	top:10px;
 	height:15%;
 	width:100%;
 	position:absolute;
@@ -46,12 +46,12 @@
 #box-res.fullWidth
 {
 	left:0px;
-	top:30%;
+	top:15%;
 	width:100%;
 	z-index:100;
 	position:absolute;
 }
-#box-actions.fullWidth
+#box-actions
 {
 	left:0px;
 	top:50%;
