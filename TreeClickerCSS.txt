@@ -119,6 +119,14 @@
 	margin:2px;
 	cursor:pointer;
 }
+.thing.dim
+{
+	filter:saturate(0.2);
+}
+.thing.lit
+{
+	filter:saturate(1);
+}
 .thing:hover,.thing.lit
 {
 	background:#6cf;
