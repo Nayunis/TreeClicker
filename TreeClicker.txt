@@ -11,87 +11,207 @@ Settings
 	building cost increase:105%
 	building cost refund:100%
 	spritesheet:icons, 48 by 48, https://raw.githubusercontent.com/Nayunis/TreeClicker/main/images/icons.png
-	stylesheet:stuff/bigBlue.css
+	stylesheet:https://raw.githubusercontent.com/Nayunis/TreeClicker/main/TreeClickerCSS.txt
 	no particles
 
 Layout
-	use default
-	*Actions
-		contains:Buttons
-		
+	*main
+		contains:resources, actions
+		ps:hide
+	*resources
+		contains:res, mainResource
+	*res
+		contains:Resources
+		class:fullWidth
+	*mainResource
+		contains:tag:mainResource
+	*actions
+		header:Actions
+		contains:planting, gathering, cutting
+	*planting
+		contains:tag:planting
+	*gathering
+		contains:tag:gathering
+	*cutting
+		contains:tag:cutting
+	*store
+		contains:upgrades, buildings
+	*upgrades
+		contains:Upgrades
+		header:Upgrades
+		costs:hide
+		names:hide
+	*buildings
+		contains:BulkDisplay, Buildings
+		header:Buildings
+		tooltip origin:left
+
 Buttons
 	*plantSeed
-		name:Plant a Seed
+		name:Plant a Tree
 		desc:Click here to plant a tree!
+		tag:planting
 		on click:
-			lose 1 seed
-			if (seeds > 0) yield 1 planted
-			if (seeds > 0) yield 1 tree
+			if (seeds > 0)
+				yield 1 planted
+				yield 1 tree
+				lose 1 seed
+			end
+			if (seeds = 0) toast Not enough seeds. Gather more!
 		end
-		icon:https://raw.githubusercontent.com/Nayunis/TreeClicker/main/images/planting.png
-		no text
-		class:bigButton
+		icon:icons[0,1]
+		class:noBackground
+		//no text
+		//class:bigButton
 		icon class:shadowed
 		tooltip origin:bottom
 		tooltip class:red
-	//*cutTree
-		//name:Cut a Tree
-		//desc:Click here to cut down a tree and gain 1 wood.
-		//on click:yield 1 wood
-		//cost:1 tree
-		//icon:https://raw.githubusercontent.com/Nayunis/TreeClicker/main/images/cutting.png
+
+	*gatherSeed
+		name:Gather Seeds
+		desc:Click here to gather some seeds!
+		tag:gathering
+		on click:
+			if (gatherCooldown = 0)
+				yield trees*random(2,4) seeds
+				gatherCooldown = 20
+				hide gatherSeed
+			end
+		end
+		icon:icons[0,0]
+		class:noBackground
+		icon class:shadowed
+		tooltip origin:bottom
+		tooltip class:red
+		hidden
+		on tick:
+			if (have upgradeGathering and gatherCooldown=0) show gatherSeed
+		end
+
+	*cutTree
+		name:Cut a Tree
+		desc:Click here to cut down a tree and gain 1 wood.
+		tag:cutting
+		hidden
+		on tick:
+			if (trees > 100) show cutTree
+		end
+		on click:
+			if (trees > 0)
+				yield 1 wood
+				lose 1 tree
+			end
+		end
+		icon:icons[1,1]
+		class:noBackground
 		//no text
+		//class:bigButton
+		icon class:shadowed
+		tooltip origin:bottom
+		tooltip class:red
 
 Resources
 	*seed|seeds
 		name:Seed|Seeds
 		desc:Seeds are needed to plant trees.
-		icon:icons[0,1]
+		icon:icons[0,0]
 		class:noBackground
 		show earned
 		on start:yield 20 seeds
 	*planted
 		name:Planted
 		desc:This is the total number of trees you have planted.
-		icon:icons[0,0]
+		icon:icons[1,0]
 		class:noBackground
 		show earned
+		always hidden
 	*tree|trees
+		tag:mainResource
 		name:Tree|Trees
 		desc:These are trees. Your goal is to have as many trees as possible!
-		icon:icons[1,0]
+		icon:icons[2,0]
 		class:noBackground
 		show earned
 	*wood
 		name:Wood
 		desc: Basic Resource gained from cutting trees.
-		icon:icons[2,0]
-		class:noBackground
-		show earned
-	*money
-		name:Money
-		desc:Money to buy things.
 		icon:icons[3,0]
 		class:noBackground
 		show earned
+		hidden when 0
+	*money
+		name:Money
+		desc:Money to buy things.
+		icon:icons[4,0]
+		class:noBackground
+		show earned
+		hidden when 0
+	*gatherCooldown
+		name:GatherCooldown
+		desc:Time until next gathering.
+		tag:gathering
+		show earned
+		on tick:lose 1 gatherCooldown
+		hidden when 0
 		
 Shinies
 
 Buildings
-	*treeplanter|treeplanters
-		name:Treeplanter
-		desc: plants 1 tree per second.
+	*gatherer
+		name:Gatherer
+		desc: gather 2-3 seeds per second.
 		icon:icons[0,0]
 		class:noBackground
-		on tick:yield 3 trees
-		on tick:yield 2 planted
-		cost:100 trees
+		on tick:
+			yield random(2,3) seeds
+		end
+		cost:5 trees
+
+	*forester
+		name:Forester
+		desc: The Forester plants 1 tree per second at a cost of 1 money. Enough seeds must be available.
+		icon:icons[1,0]
+		class:noBackground
+		on tick:
+			if (seeds>0)
+				yield 1 trees
+				yield 1 planted
+				lose 1 seed
+				lose 1 money
+			end
+		end
+		cost:5 trees
+
+	*woodcutter
+		name:Woodcutter
+		desc: The Woodcutter cuts 1 tree every 5 seconds to gain 1 wood at a cost of 20 money.
+		icon:icons[1,1]
+		class:noBackground
+		on tick:
+			if (trees>0)
+				yield 0.2 wood
+				lose 0.2 tree
+				lose 4 money
+			end
+		end
+		cost:100 wood
+		req:1000 trees		
+
+Upgrades	
+	*upgradeGathering
+		name:Gathering
+		desc:You gain the ability to gather seeds.
+		req:20 trees
 		
-Upgrades
-	
+	*analytics
+		name:Analytics
+		desc:blabla
+		cost:5 wood
+		req:500 money
+		
 Achievements
 	*100trees
 		name:First efforts.
 		desc:You've planted 100 trees. As an acknowledgement the GreenFoundation donates 100 money.
-		req:10 trees
+		req:100 trees
 		on earn:yield 100 money
