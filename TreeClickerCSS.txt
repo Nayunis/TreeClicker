@@ -7,7 +7,7 @@
 
 .thing,.box-header,.box-footer,.box-bit
 {
-	background:#3391FF;
+	background:#339100;
 	box-shadow:0px 0px 4px rgba(0,0,0,0.2),1px 1px 2px rgba(0,0,0,0.5),0px 0px 4px rgba(255,255,255,0.5) inset;
 }
 .box-bit{border-radius:5px;}
@@ -73,6 +73,8 @@
 	left:0px;
 	width:30%;
 	height:100%;
+	background:rgba(200,200,200,0.8);
+	position:absolute;
 }
 #box-gathering
 {
@@ -80,13 +82,16 @@
 	left:33%;
 	width:30%;
 	height:100%;
+	position:absolute;
 }
 #box-cutting
 {
 	top:0px;
 	left:66%;
 	width:30%;
-	height:100%
+	height:100%;
+	position:absolute;
+	
 }
 #box-store
 {
