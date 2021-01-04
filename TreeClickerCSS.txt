@@ -118,6 +118,7 @@
 	padding:0px;
 	margin:2px;
 	cursor:pointer;
+	filter:saturate(1);
 }
 .thing.dim
 {
@@ -136,12 +137,13 @@
 	//opacity:0.65;
 	filter:saturate(0.2);
 }
-.upgrade.cantAfford
-{
-	box-shadow:0px 0px 4px #39f;
-	border-radius:8px;
-	filter:saturate(0.2);
-}
+
+//.upgrade.cantAfford
+//{
+	//box-shadow:0px 0px 4px #39f;
+	//border-radius:8px;
+	//filter:saturate(0.2);
+//}
 .upgrade.cantAfford:hover
 {
 	box-shadow:0px 0px 4px #339100;
