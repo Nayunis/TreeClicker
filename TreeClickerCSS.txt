@@ -76,11 +76,15 @@
 	background:rgba(20,20,20,0.4);
 	position:absolute;
 }
-#box-planting,#box-gathering,#box-cutting,#box-selling
+#box-planting,#box-gathering,#box-cutting
 {
 	top:40px;
 }
-#box-gathering
+#box-selling
+{
+	bottom:5px;
+}
+#box-gathering,#box-selling
 {
 	left:35%;
 }
@@ -88,10 +92,7 @@
 {
 	left:67.5%;	
 }
-#box-selling
-{
-	bottom:5px;
-}
+
 #box-store
 {
 	right:0px;
