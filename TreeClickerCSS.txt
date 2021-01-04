@@ -35,9 +35,12 @@
 	width:50%;
 	position:absolute;
 }
-#box-res.fullWidth
+#box-resources
 {
 	left:0px;
+}
+#box-res.fullWidth
+{
 	top:10px;
 	width:100%;
 	z-index:100;
@@ -45,7 +48,6 @@
 }
 #box-mainResource
 {
-	left:0px;
 	top:15%;
 	height:15%;
 	width:100%;
@@ -55,7 +57,7 @@
 #box-actions
 {
 	left:0px;
-	top:50%;
+	top:40%;
 	width:100%;
 	position:absolute;
 }
