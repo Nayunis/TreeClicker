@@ -7,7 +7,7 @@
 
 .thing,.box-header,.box-footer,.box-bit
 {
-	background:#3391FF;
+	background:#339100;
 	box-shadow:0px 0px 4px rgba(0,0,0,0.2),1px 1px 2px rgba(0,0,0,0.5),0px 0px 4px rgba(255,255,255,0.5) inset;
 }
 .box-bit{border-radius:5px;}
@@ -127,9 +127,9 @@
 {
 	filter:saturate(1);
 }
-.thing:hover,.thing.lit
+.thing:hover
 {
-	background:#6cf;
+	background:#339100;
 }
 .thing.cantAfford
 {
@@ -142,11 +142,11 @@
 }
 .upgrade.cantAfford:hover
 {
-	box-shadow:0px 0px 4px #6cf;
+	box-shadow:0px 0px 4px #339100;
 }
 .upgrade.owned,.achiev.owned
 {
-	background:#6cf;
+	background:#339100;
 }
 .thing-text,.thing-costs{font-weight:bold;}
 
