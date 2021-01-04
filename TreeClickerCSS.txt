@@ -69,8 +69,8 @@
 }
 #box-planting,#box-gathering,#box-cutting
 {
-	top:20px;
-	left:0px;
+	top:30px;
+	left:2.5%;
 	width:30%;
 	height:100%;
 	background:rgba(200,200,200,0.8);
@@ -78,11 +78,11 @@
 }
 #box-gathering
 {
-	left:33%;
+	left:35%;
 }
 #box-cutting
 {
-	left:66%;	
+	left:67.5%;	
 }
 #box-store
 {
