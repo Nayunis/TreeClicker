@@ -56,7 +56,7 @@
 	height:60%;
 	width:100%;
 	position:absolute;
-	font-size:20;
+	font-size:25pt;
 }
 #box-actions
 {
@@ -67,12 +67,13 @@
 	position:absolute;
 	background:linear-gradient(to bottom,rgba(184,139,83,0.6) 0%,rgba(130,100,62,0.6) 100%);
 }
-#box-planting,#box-gathering,#box-cutting
+#box-planting,#box-gathering,#box-cutting,#box-selling
 {
-	top:35px;
+	top:40px;
+	min-top:40px;
 	left:2.5%;
 	width:30%;
-	height:100%;
+	height:40%;
 	background:rgba(20,20,20,0.4);
 	position:absolute;
 }
@@ -83,6 +84,10 @@
 #box-cutting
 {
 	left:67.5%;	
+}
+#box-selling
+{
+	top:50%;
 }
 #box-store
 {
