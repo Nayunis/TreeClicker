@@ -107,6 +107,7 @@
 	bottom:0px;
 	width:50%;
 	right:0%;
+	height:100%;
 	overflow-x:hidden;
 	overflow-y:scroll;
 	padding-bottom:48px;/* this is to accommodate the info and settings buttons */
