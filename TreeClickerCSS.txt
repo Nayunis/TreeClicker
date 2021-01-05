@@ -101,7 +101,7 @@
 	width:50%;
 	position:absolute;
 }
-#box-buildings,#box-upgrades
+#box-buildings,#box-passives
 {
 	top:0px;
 	bottom:0px;
@@ -112,8 +112,14 @@
 	padding-bottom:48px;/* this is to accommodate the info and settings buttons */
 	position:absolute;
 }
-#box-upgrades
+#box-passives
 {right:50%;}
+
+#box-upgrades
+{top:0px;}
+
+#box-achievements
+{top:50%;}
 
 #box-buildings{background:linear-gradient(to right,rgba(0,0,0,0.3) 0%,rgba(0,0,0,0.3) 20%);}
 #box-upgrades{background:rgba(0,0,0,0.3);}
