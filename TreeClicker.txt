@@ -27,20 +27,27 @@ Layout
 		contains:tag:mainResource
 	*actions
 		header:Actions
-		contains:planting, gathering, cutting
+		contains:planting, gathering, cutting, selling
 	*planting
 		contains:tag:planting
 	*gathering
 		contains:tag:gathering
 	*cutting
 		contains:tag:cutting
+	*selling
+		contains:tag:selling
 	*store
-		contains:upgrades, buildings
+		contains:passives, buildings
+	*passives
+		contains:upgrades, achievements
 	*upgrades
 		contains:Upgrades
 		header:Upgrades
 		costs:hide
 		names:hide
+	*achievements
+		contains:Achievements
+		header:Achievements
 	*buildings
 		contains:BulkDisplay, Buildings
 		header:Buildings
@@ -52,166 +59,257 @@ Buttons
 		desc:Click here to plant a tree!
 		tag:planting
 		on click:
-			if (seeds > 0)
-				yield 1 planted
-				yield 1 tree
-				lose 1 seed
-			end
-			if (seeds = 0) toast Not enough seeds. Gather more!
-		end
+			[include convert1to1 %inN1="1" %inType1="seeds" %outN1="1" %outType1="tree"]
+		end	
 		icon:icons[0,1]
 		class:noBackground
-		//no text
-		//class:bigButton
 		icon class:shadowed
+		[include iconCheck %Resource="seeds" %N="1" %iconID="plantSeed"]
 		tooltip origin:bottom
 		tooltip class:red
 
 	*gatherSeed
 		name:Gather Seeds
-		desc:Click here to gather some seeds!
+		desc:Gather [trees*2] seeds from your trees. You gain 2 seeds per tree.
 		tag:gathering
 		on click:
 			if (gatherCooldown = 0)
-				yield trees*random(2,4) seeds
+				yield trees*4 seeds
 				gatherCooldown = 20
-				hide gatherSeed
+				dim gatherSeed
 			end
 		end
-		icon:icons[0,0]
+		icon:icons[1,1]
 		class:noBackground
 		icon class:shadowed
 		tooltip origin:bottom
 		tooltip class:red
 		hidden
 		on tick:
-			if (have upgradeGathering and gatherCooldown=0) show gatherSeed
+			if (have upgradeGathering and gatherCooldown=0)
+				show gatherSeed
+				light gatherSeed
+			end
 		end
+		lit
 
 	*cutTree
 		name:Cut a Tree
 		desc:Click here to cut down a tree and gain 1 wood.
 		tag:cutting
 		hidden
-		on tick:
-			if (trees > 100) show cutTree
-		end
 		on click:
-			if (trees > 0)
-				yield 1 wood
-				lose 1 tree
-			end
-		end
-		icon:icons[1,1]
+			[include convert1to1 %inN1="5" %inType1="trees" %outN1="1" %outType1="wood"]
+		end	
+		icon:icons[2,1]
 		class:noBackground
-		//no text
-		//class:bigButton
 		icon class:shadowed
+		[include iconCheck %Resource="trees" %N="5" %iconID="cutTree"]
+		tooltip origin:bottom
+		tooltip class:red
+	
+	*sellWood
+		name:Sell Wood
+		desc:Click here to sell wood for money.
+		tag:selling
+		hidden
+		on click:
+			[include convert1to1 %inN1="20" %inType1="wood" %outN1="1" %outType1="money"]
+		end	
+		icon:icons[4,0]
+		class:noBackground
+		icon class:shadowed
+		[include iconCheck %Resource="wood" %N="20" %iconID="sellWood"]
 		tooltip origin:bottom
 		tooltip class:red
 
 Resources
-	*seed|seeds
-		name:Seed|Seeds
-		desc:Seeds are needed to plant trees.
-		icon:icons[0,0]
+	*TEMPLATE
+		lit
 		class:noBackground
 		show earned
-		on start:yield 20 seeds
-	*planted
-		name:Planted
-		desc:This is the total number of trees you have planted.
-		icon:icons[1,0]
-		class:noBackground
-		show earned
-		always hidden
 	*tree|trees
 		tag:mainResource
 		name:Tree|Trees
 		desc:These are trees. Your goal is to have as many trees as possible!
 		icon:icons[2,0]
-		class:noBackground
-		show earned
+	*seed|seeds
+		name:Seed|Seeds
+		desc:Seeds are needed to plant trees.
+		icon:icons[0,0]
+		on start:yield 20 seeds
+	*volunteer|volunteers
+		name:Volunteer|Volunteers
+		desc:Volunteers help you to plant trees.
+		icon:icons[1,0]
+		on tick:
+			[include convert1to1 %inN1="10*volunteers" %inType1="seeds" %outN1="1*volunteers" %outType1="tree"]
+		end
+		hidden when 0
 	*wood
 		name:Wood
 		desc: Basic Resource gained from cutting trees.
 		icon:icons[3,0]
-		class:noBackground
-		show earned
 		hidden when 0
 	*money
 		name:Money
 		desc:Money to buy things.
 		icon:icons[4,0]
-		class:noBackground
-		show earned
 		hidden when 0
 	*gatherCooldown
 		name:GatherCooldown
 		desc:Time until next gathering.
 		tag:gathering
-		show earned
 		on tick:lose 1 gatherCooldown
 		hidden when 0
 		
 Shinies
 
 Buildings
-	*gatherer
-		name:Gatherer
-		desc: gather 2-3 seeds per second.
-		icon:icons[0,0]
+	*blogPost
+		name:Blog Post
+		desc:You make a blog post. Hopefully this will bring some volunteers to help you plant trees. Each volunteer uses 10 seeds to plant one tree.
+		icon:icons[1,0]
 		class:noBackground
 		on tick:
-			yield random(2,3) seeds
+			[include convert1to1 %inN1="10" %inType1="seeds" %outN1="1" %outType1="tree"]
 		end
-		cost:5 trees
+		cost:20 money
+		req:100 trees:earned
+		lit	
+	
+	//*gatherer
+	//	name:Gatherers Hut
+	//	desc:Gather 2-3 seeds per second.
+	//	icon:icons[0,0]
+	//	class:noBackground
+	//	on tick:
+	//		yield random(2,3) seeds
+	//	end
+	//	cost:500 wood, 200 money
+	//	req:1000 trees
+	//	lit
 
 	*forester
-		name:Forester
+		name:Forester's Hut
 		desc: The Forester plants 1 tree per second at a cost of 1 money. Enough seeds must be available.
 		icon:icons[1,0]
 		class:noBackground
 		on tick:
-			if (seeds>0)
+			if (seeds>0 and money>1)
 				yield 1 trees
-				yield 1 planted
 				lose 1 seed
 				lose 1 money
 			end
 		end
-		cost:5 trees
+		cost:50 wood
+		req:10000 trees
+		lit
 
 	*woodcutter
 		name:Woodcutter
-		desc: The Woodcutter cuts 1 tree every 5 seconds to gain 1 wood at a cost of 20 money.
+		desc:The Woodcutter cuts 1 tree every 5 seconds to gain 1 wood at a cost of 20 money.
 		icon:icons[1,1]
 		class:noBackground
 		on tick:
-			if (trees>0)
+			if (trees>0 and money>20)
 				yield 0.2 wood
 				lose 0.2 tree
 				lose 4 money
 			end
 		end
 		cost:100 wood
-		req:1000 trees		
+		req:1000 trees
+		lit	
+	
+	*salesman
+		name:Salesman
+		desc:Sells 10 wood for 1 money.
+		on tick:
+			if (wood>10)
+				yield 1 money
+				lose 10 wood
+			end
+		end
+		icon:icons[4,0]
+		class:noBackground
+		req:200 money
+		cost:50 wood
+		lit
 
-Upgrades	
+Upgrades
 	*upgradeGathering
 		name:Gathering
 		desc:You gain the ability to gather seeds.
 		req:20 trees
-		
+		lit
+	
+	*upgradeAxe
+		name:Axe
+		desc:You buy an axe and you now have the ability to cut trees.
+		req:1000 trees
+		cost:100 money
+		passive:show cutTree
+		lit
+
+	*upgradeTrading
+		name:Trading
+		desc:You build a trading stand to sell wood.
+		cost:100 wood
+		req:200 money
+		passive:show sellWood
+		lit
+
 	*analytics
 		name:Analytics
 		desc:blabla
 		cost:5 wood
 		req:500 money
+		lit
 		
 Achievements
-	*100trees
-		name:First efforts.
-		desc:You've planted 100 trees. As an acknowledgement the GreenFoundation donates 100 money.
-		req:100 trees
-		on earn:yield 100 money
+	[include Xtrees %amount="100" %name="First efforts are Rewarded!"]
+	[include Xtrees %amount="200" %name="200 Trees!"]
+	[include Xtrees %amount="500" %name="500 Trees!"]
+	[include Xtrees %amount="1000" %name="1000 Trees!"]
+	[include Xtrees %amount="5000" %name="5000 Trees!"]
+	[include Xtrees %amount="10000" %name="10000 Trees!"]
+	[include Xtrees %amount="50000" %name="50000 Trees!"]
+
+
+Includes
+	*include Xtrees %amount %name
+  		*[%amount]trees
+    		name:[%name]
+    		desc:You have planted [%amount] trees! As an acknowledgement the GreenFoundation donates [%amount] money.
+			req:[%amount] trees
+			on earn:yield [%amount] money
+			lit
+
+	*include convert1to1 %inN1 %inType1 %outN1 %outType1
+		if ([%inType1] >= [%inN1])
+			yield [%outN1] [%outType1]
+			lose [%inN1] [%inType1]
+		else
+			toast Not enough [%inType1]!
+		end
+
+	*include iconCheck %Resource %N %iconID
+		on tick:
+			if ([%Resource] < [%N])
+				dim [%iconID]
+			else
+				light [%iconID]
+			end
+		end
+
+	*include convert1to2 %inN1 %inType1 %outN1 %outType1 %outN2 %outType2 %iconID=""
+		if ([%inType1] >= [%inN1])
+			yield [%outN1] [%outType1]
+			yield [%outN2] [%outType2]
+			lose [%inN1] [%inType1]
+		end
+		if ([%inType1] < [%inN1])
+			toast Not enough [%inType1]!
+			dim [%iconID]
+		end
