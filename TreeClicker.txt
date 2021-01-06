@@ -138,14 +138,6 @@ Resources
 		desc:Seeds are needed to plant trees.
 		icon:icons[0,0]
 		on start:yield 20 seeds
-	*volunteer|volunteers
-		name:Volunteer|Volunteers
-		desc:Volunteers help you to plant trees.
-		icon:icons[1,0]
-		on tick:
-			[include convert1to1 %inN1="10*volunteers" %inType1="seeds" %outN1="1*volunteers" %outType1="tree"]
-		end
-		hidden when 0
 	*wood
 		name:Wood
 		desc: Basic Resource gained from cutting trees.
@@ -166,17 +158,30 @@ Resources
 Shinies
 
 Buildings
+//adds
+	*TEMPLATE
+		lit
+		class:noBackground
+		
 	*blogPost
 		name:Blog Post
-		desc:You make a blog post. Hopefully this will bring some volunteers to help you plant trees. Each volunteer uses 10 seeds to plant one tree.
-		icon:icons[1,0]
-		class:noBackground
+		desc:You make a blog post about your project to find some volunteers. They plant 1 tree per second and use 10 seeds.
+		icon:icons[0,2]
 		on tick:
 			[include convert1to1 %inN1="10" %inType1="seeds" %outN1="1" %outType1="tree"]
 		end
 		cost:20 money
 		req:100 trees:earned
-		lit	
+
+	*newsletter|newsletters
+		name:Newsletter|Newsletters
+		desc:You send out a newsletter to your followers about your project to find more volunteers. They plant 10 tree per second and use 40 seeds.
+		icon:icons[1,2]
+		on tick:
+			[include convert1to1 %inN1="20" %inType1="seeds" %outN1="5" %outType1="tree"]
+		end
+		cost:100 money
+		req:1000 trees:earned
 	
 	//*gatherer
 	//	name:Gatherers Hut
@@ -187,39 +192,39 @@ Buildings
 	//		yield random(2,3) seeds
 	//	end
 	//	cost:500 wood, 200 money
-	//	req:1000 trees
+	//	req:1000 trees:earned
 	//	lit
 
 	*forester
 		name:Forester's Hut
-		desc: The Forester plants 1 tree per second at a cost of 1 money. Enough seeds must be available.
+		desc: The forester plants 100 trees per second at a cost of 1 money. Enough seeds must be available.
 		icon:icons[1,0]
 		class:noBackground
 		on tick:
 			if (seeds>0 and money>1)
-				yield 1 trees
-				lose 1 seed
+				yield 100 trees
+				lose 100 seed
 				lose 1 money
 			end
 		end
-		cost:50 wood
-		req:10000 trees
+		cost:50 wood, 100 money
+		req:10000 trees:earned
 		lit
 
 	*woodcutter
 		name:Woodcutter
 		desc:The Woodcutter cuts 1 tree every 5 seconds to gain 1 wood at a cost of 20 money.
-		icon:icons[1,1]
+		icon:icons[2,1]
 		class:noBackground
 		on tick:
 			if (trees>0 and money>20)
-				yield 0.2 wood
-				lose 0.2 tree
-				lose 4 money
+				yield 5 wood
+				lose 10 tree
+				lose 1 money
 			end
 		end
-		cost:100 wood
-		req:1000 trees
+		cost:100 money
+		req:200 wood:earned
 		lit	
 	
 	*salesman
@@ -227,13 +232,13 @@ Buildings
 		desc:Sells 10 wood for 1 money.
 		on tick:
 			if (wood>10)
-				yield 1 money
+				yield 10 money
 				lose 10 wood
 			end
 		end
 		icon:icons[4,0]
 		class:noBackground
-		req:200 money
+		req:20000 money:earned
 		cost:50 wood
 		lit
 
@@ -241,13 +246,13 @@ Upgrades
 	*upgradeGathering
 		name:Gathering
 		desc:You gain the ability to gather seeds.
-		req:20 trees
+		req:15 trees:earned
 		lit
 	
 	*upgradeAxe
 		name:Axe
 		desc:You buy an axe and you now have the ability to cut trees.
-		req:1000 trees
+		req:1000 trees:earned
 		cost:100 money
 		passive:show cutTree
 		lit
@@ -256,16 +261,16 @@ Upgrades
 		name:Trading
 		desc:You build a trading stand to sell wood.
 		cost:100 wood
-		req:200 money
+		req:1000 wood:earned
 		passive:show sellWood
 		lit
 
-	*analytics
-		name:Analytics
-		desc:blabla
-		cost:5 wood
-		req:500 money
-		lit
+	//*analytics
+	//	name:Analytics
+	//	desc:blabla
+	//	cost:5 wood
+	//	req:500 money:earned
+	//	lit
 		
 Achievements
 	[include Xtrees %amount="100" %name="First efforts are Rewarded!"]
@@ -278,7 +283,7 @@ Achievements
 
 
 Includes
-	*include Xtrees %amount %name
+ 	*include Xtrees %amount %name
   		*[%amount]trees
     		name:[%name]
     		desc:You have planted [%amount] trees! As an acknowledgement the GreenFoundation donates [%amount] money.
