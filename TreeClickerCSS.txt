@@ -130,7 +130,10 @@
 {top:0px;}
 
 #box-achievements
-{bottom:50%;}
+{
+	bottom:0px
+	height:50%;
+}
 
 
 #bulkDisplay{margin:-11px 24px 4px 24px;}
