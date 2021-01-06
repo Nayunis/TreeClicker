@@ -65,6 +65,7 @@
 	height:10%;
 	width:100%;
 	position:absolute;
+	background:rgba(20,20,20,0.4);
 }
 #box-actions
 {
