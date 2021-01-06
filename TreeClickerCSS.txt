@@ -127,11 +127,14 @@
 {right:50%;}
 
 #box-upgrades
-{top:0px;}
+{
+	top:0px;
+	height:50%;
+}
 
 #box-achievements
 {
-	bottom:0px
+	bottom:0px;
 	height:50%;
 }
 
